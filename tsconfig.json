@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": true,
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES6",
+    "lib": [
+      "ES2018"
+    ],
+    "strict": true,
+    "noImplicitAny": true
+  },
+  "include": [
+    "src"
+  ]
+}

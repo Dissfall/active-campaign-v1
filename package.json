@@ -1,0 +1,58 @@
+{
+  "name": "active-campaign-v1",
+  "version": "1.0.0",
+  "description": "Wrapper for Active Campaign API v1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "serve": "node dist",
+    "build": "node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/eslint 'src/**/*.{ts}' --fix",
+    "test": "jest --coverage",
+    "prepublish": "yarn build"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/jest": "^25.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
+    "@typescript-eslint/parser": "^2.16.0",
+    "cz-conventional-changelog": "3.0.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.0.10",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.2",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.0"
+  },
+  "dependencies": {
+    "@types/node": "^13.1.7",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.7.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "./node_modules/.bin/lint-staged",
+      "commit-msg": "./node_modules/.bin/commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts}": [
+      "yarn lint",
+      "prettier --write"
+    ]
+  },
+  "repository": "git@github.com:Dissfall/active-campaign-v1.git",
+  "author": "dissfall <dissfalling@gmail.com>",
+  "license": "MIT"
+}
