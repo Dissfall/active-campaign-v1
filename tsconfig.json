@@ -1,16 +1,22 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "noImplicitAny": true,
-    "noUnusedLocals": true,
-    "downlevelIteration": true,
-    "target": "es6",
-    "lib": ["esnext"],
-    "module": "commonjs",
-    "declaration": true,
     "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "ES2015",
+    "moduleResolution": "Node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES6",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "ES2018"
+    ],
     "strict": true,
-    "strictNullChecks": true
+    "noImplicitAny": true
   },
   "include": [
     "src"
