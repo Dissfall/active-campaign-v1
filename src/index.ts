@@ -168,6 +168,20 @@ class AC {
     `http://${accountName}.api-us1.com`
 }
 
+const methods = {
+  account: {
+    view: 'account_view'
+  },
+  contact: {
+    add: 'contact_add',
+    delete: 'contact_delete',
+    edit: 'contact_edit',
+    list: 'contact_list',
+    sync: 'contact_sync',
+    view: 'contact_view'
+  }
+}
+
 export interface Params {
   [propName: string]: string
 }
