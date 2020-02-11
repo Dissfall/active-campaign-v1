@@ -20,6 +20,22 @@ class AC {
   }
 
   async contactAdd(data: Contact): Promise<ContactAddRes> {
+    return this.request(methods.contact.add).auth.payload(this.prepareContactPayload(data)).post
+  }
+
+  async contactView(param: number | string): Promise<ContactViewRes> {
+    if (typeof param === 'string' && param.indexOf('@') > -1) {
+      return this.request(methods.contact.viewEmail).auth.set({email: param}).get
+    } else {
+      return this.request(methods.contact.view).auth.set({id: param.toString()}).get
+    }
+  }
+
+  async contactSync(data: Contact): Promise<ContactAddRes> {
+    return this.request(methods.contact.sync).auth.payload(this.prepareContactPayload(data)).post
+  }
+
+  private prepareContactPayload(data: Contact): ContactPayload {
     const contact: ContactPayload = pickBy<ContactPayload>({
       email: data.email,
       first_name: data?.firstName ?? '',
@@ -29,21 +45,12 @@ class AC {
       tags: join(data?.tags, ', ') ?? '',
       ip4: data?.ip4 ?? '',
       status: String(data?.status ?? ''),
-      form: String(data?.form ?? ''),
-      ...mapKeys(data.fields, (value: string, key: string) => `field[%${key}%,0]`)
+      form: String(data?.form ?? '')
     }, (value: any) => value != '') as ContactPayload
 
     if (data.list) contact[`p[${data.list}]`] = String(data.list)
 
-    return this.request(methods.contact.add).auth.payload(contact).post
-  }
-
-  async contactView(param: number | string): Promise<ContactViewRes> {
-    if (typeof param === 'string' && param.indexOf('@') > -1) {
-      return this.request(methods.contact.viewEmail).auth.set({email: param}).get
-    } else {
-      return this.request(methods.contact.view).auth.set({id: param.toString()}).get
-    }
+    return contact
   }
 
   /**
