@@ -102,4 +102,13 @@ describe('Contact', () => {
       expect(res.body.email).not.toBe('')
     })
   })
+
+  it('View by email', () => {
+    jest.setTimeout(30000)
+    const email = 'Elnora_Tromp@hotmail.com'
+    return ac.contactView(email).then((res: ContactViewRes) => {
+      expect(res.body.result_code).toBe(1)
+      expect(res.body.email).toBe('Elnora_Tromp@hotmail.com')
+    })
+  })
 })

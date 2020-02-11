@@ -38,8 +38,12 @@ class AC {
     return this.request(methods.contact.add).auth.payload(contact).post
   }
 
-  async contactView(id: number | string): Promise<ContactViewRes> {
-    return this.request(methods.contact.view).auth.set({id: id.toString()}).get
+  async contactView(param: number | string): Promise<ContactViewRes> {
+    if (typeof param === 'string' && param.indexOf('@') > -1) {
+      return this.request(methods.contact.viewEmail).auth.set({email: param}).get
+    } else {
+      return this.request(methods.contact.view).auth.set({id: param.toString()}).get
+    }
   }
 
   /**
@@ -201,7 +205,8 @@ const methods = {
     edit: 'contact_edit',
     list: 'contact_list',
     sync: 'contact_sync',
-    view: 'contact_view'
+    view: 'contact_view',
+    viewEmail: 'contact_view_email'
   }
 }
 
