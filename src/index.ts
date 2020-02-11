@@ -1,6 +1,6 @@
 import { get, post } from 'superagent'
 import { zip, join, map, pickBy, mapKeys } from 'lodash'
-import { AccountViewRes, ContactAddRes, Contact, ContactPayload } from './types'
+import { AccountViewRes, ContactAddRes, ContactViewRes, Contact, ContactPayload } from './types'
 
 /**
  * Active Campaign API v1 wrapper
@@ -36,6 +36,10 @@ class AC {
     if (data.list) contact[`p[${data.list}]`] = String(data.list)
 
     return this.request(methods.contact.add).auth.payload(contact).post
+  }
+
+  async contactView(id: number | string): Promise<ContactViewRes> {
+    return this.request(methods.contact.view).auth.set({id: id.toString()}).get
   }
 
   /**

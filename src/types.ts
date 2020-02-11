@@ -36,6 +36,61 @@ export interface ContactAddRes extends Response {
   }
 }
 
+export interface ContactViewRes extends Response {
+  body: {
+    id: string
+    subscribeid: number
+    listid: number
+    formid: number
+    sdate: string
+    udate: string
+    rating: number
+    rating_tstamp: string
+    gravatar: string
+    deleted: string
+    status: number
+    responder: 1
+    sync: 0
+    unsubreason: string
+    unsubcampaignid: string
+    unsubmessageid: string
+    first_name: string
+    last_name: string
+    customer_acct_id: number
+    customer_acct_name: string
+    cdate: string
+    email: string
+    bounced_hard: string
+    bounced_soft: string
+    bounced_date: string
+    campaign_history: string[]
+    ip: string
+    hash: string
+    socialdata_lastcheck: string
+    lid: 1
+    name: string
+    a_unsub_date: string
+    a_unsub_time: string
+    lists: string[]
+    listslist: string
+    actions: any[]
+    fields: {
+      [key: string]: Field
+    }
+    bounces: {
+      mailing: string[]
+      mailings: number
+      responder: string[]
+      responders: number
+    }
+    bouncescnt: number
+    tags: string[]
+    result_code: number
+    result_message: string
+    result_output: string
+  }
+}
+
 export interface ContactPayload {
   email: string
   first_name: string
@@ -47,6 +102,27 @@ export interface ContactPayload {
   form: string
   status: string
   [propName: string]: string
+}
+
+export interface Field {
+  id: string
+  title: string
+  descript: string
+  type: string
+  isRequired: string
+  perstag: string
+  defval: string
+  show_in_list: string
+  rows: string
+  cols: string
+  visible: string
+  service: string
+  ordernum: string
+  cdate: string
+  udate: string
+  val: string
+  element: string
+  tag: string
 }
 
 export interface Contact {
