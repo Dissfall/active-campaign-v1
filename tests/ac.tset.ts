@@ -1,5 +1,6 @@
 import { AC } from '../src/index'
 import { AccountViewRes } from '../src/types'
+import { name, internet, phone } from 'faker'
 
 let ac: AC
 
@@ -93,5 +94,62 @@ describe('API test', () => {
     return ac.accountView().then((res: AccountViewRes) => {
       expect(res.body.result_code).toBe(1)
     })
+  })
+
+  it('Contact add', () => {
+    jest.setTimeout(30000)
+    return ac
+      .contactAdd({
+        email: internet.email(),
+        firstName: name.firstName(),
+        lastName: name.lastName()
+      })
+      .then((res: AccountViewRes) => {
+        expect(res.body.result_code).toBe(1)
+      })
+  })
+
+  it('Contact add without data', () => {
+    jest.setTimeout(30000)
+    return ac
+      .contactAdd({
+        email: internet.email()
+      })
+      .then((res: AccountViewRes) => {
+        expect(res.body.result_code).toBe(1)
+      })
+  })
+
+  // TEST field required
+  it('Contact add with field data', () => {
+    jest.setTimeout(30000)
+    return ac
+      .contactAdd({
+        email: internet.email(),
+        firstName: name.firstName(),
+        lastName: name.lastName(),
+        fields: {
+          TEST: 'TEST'
+        }
+      })
+      .then((res: AccountViewRes) => {
+        //TODO: More params to check
+        expect(res.body.result_code).toBe(1)
+      })
+  })
+
+  it('Contact add to list', () => {
+    jest.setTimeout(30000)
+    return ac
+      .contactAdd({
+        email: internet.email(),
+        firstName: name.firstName(),
+        lastName: name.lastName(),
+        list: 1
+      })
+      .then((res: AccountViewRes) => {
+        //TODO: More params to check
+        expect(res.body.result_code).toBe(1)
+      })
   })
 })

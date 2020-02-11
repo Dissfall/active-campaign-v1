@@ -1,6 +1,6 @@
 import { get, post } from 'superagent'
-import { zip, join, map } from 'lodash'
-import { AccountViewRes } from './types'
+import { zip, join, map, pickBy, mapKeys } from 'lodash'
+import { AccountViewRes, ContactAddRes, Contact, ContactPayload } from './types'
 
 /**
  * Active Campaign API v1 wrapper
@@ -17,6 +17,25 @@ class AC {
 
   async accountView(): Promise<AccountViewRes> {
     return this.request('account_view').auth.get
+  }
+
+  async contactAdd(data: Contact): Promise<ContactAddRes> {
+    const contact: ContactPayload = pickBy<ContactPayload>({
+      email: data.email,
+      first_name: data?.firstName ?? '',
+      last_name: data?.lastName ?? '',
+      phone: data?.phone ?? '',
+      customer_acct_name: data?.customerName ?? '',
+      tags: join(data?.tags, ', ') ?? '',
+      ip4: data?.ip4 ?? '',
+      status: String(data?.status ?? ''),
+      form: String(data?.form ?? ''),
+      ...mapKeys(data.fields, (value: string, key: string) => `field[%${key}%,0]`)
+    }, (value: any) => value != '') as ContactPayload
+
+    if (data.list) contact[`p[${data.list}]`] = String(data.list)
+
+    return this.request(methods.contact.add).auth.payload(contact).post
   }
 
   /**
