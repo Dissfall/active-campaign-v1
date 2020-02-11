@@ -1,5 +1,5 @@
 import { AC } from '../src/index'
-import { AccountViewRes } from '../src/types'
+import { AccountViewRes, ContactViewRes } from '../src/types'
 import { name, internet, phone } from 'faker'
 
 let ac: AC
@@ -91,5 +91,24 @@ describe('Contact', () => {
         //TODO: More params to check
         expect(res.body.result_code).toBe(1)
       })
+  })
+
+  it('View', () => {
+    jest.setTimeout(30000)
+    const id = 31
+    return ac.contactView(id).then((res: ContactViewRes) => {
+      expect(res.body.result_code).toBe(1)
+      expect(parseFloat(res.body.id)).toBe(id)
+      expect(res.body.email).not.toBe('')
+    })
+  })
+
+  it('View by email', () => {
+    jest.setTimeout(30000)
+    const email = 'Elnora_Tromp@hotmail.com'
+    return ac.contactView(email).then((res: ContactViewRes) => {
+      expect(res.body.result_code).toBe(1)
+      expect(res.body.email).toBe('Elnora_Tromp@hotmail.com')
+    })
   })
 })

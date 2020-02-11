@@ -1,6 +1,6 @@
 import { get, post } from 'superagent'
 import { zip, join, map, pickBy, mapKeys } from 'lodash'
-import { AccountViewRes, ContactAddRes, Contact, ContactPayload } from './types'
+import { AccountViewRes, ContactAddRes, ContactViewRes, Contact, ContactPayload } from './types'
 
 /**
  * Active Campaign API v1 wrapper
@@ -36,6 +36,14 @@ class AC {
     if (data.list) contact[`p[${data.list}]`] = String(data.list)
 
     return this.request(methods.contact.add).auth.payload(contact).post
+  }
+
+  async contactView(param: number | string): Promise<ContactViewRes> {
+    if (typeof param === 'string' && param.indexOf('@') > -1) {
+      return this.request(methods.contact.viewEmail).auth.set({email: param}).get
+    } else {
+      return this.request(methods.contact.view).auth.set({id: param.toString()}).get
+    }
   }
 
   /**
@@ -197,7 +205,8 @@ const methods = {
     edit: 'contact_edit',
     list: 'contact_list',
     sync: 'contact_sync',
-    view: 'contact_view'
+    view: 'contact_view',
+    viewEmail: 'contact_view_email'
   }
 }
 
