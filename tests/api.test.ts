@@ -111,4 +111,17 @@ describe('Contact', () => {
       expect(res.body.email).toBe('Elnora_Tromp@hotmail.com')
     })
   })
+
+  it('Sync', () => {
+    jest.setTimeout(30000)
+    return ac
+      .contactSync({
+        email: 'Elnora_Tromp@hotmail.com',
+        firstName: name.firstName(),
+        lastName: name.lastName(),
+      })
+      .then((res: AccountViewRes) => {
+        expect(res.body.result_code).toBe(1)
+      })
+  })
 })
