@@ -45,7 +45,8 @@ class AC {
       tags: join(data?.tags, ', ') ?? '',
       ip4: data?.ip4 ?? '',
       status: String(data?.status ?? ''),
-      form: String(data?.form ?? '')
+      form: String(data?.form ?? ''),
+      ...mapKeys(data.fields, (val: string, key: string) => `field[%${key}%,0]`)
     }, (value: any) => value != '') as ContactPayload
 
     if (data.list) contact[`p[${data.list}]`] = String(data.list)
