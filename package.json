@@ -4,6 +4,9 @@
   "description": "Wrapper for Active Campaign API v1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "./dist/*.{js,d.ts,map}"
+  ],
   "scripts": {
     "start": "npm run build && npm run serve",
     "serve": "node dist",
