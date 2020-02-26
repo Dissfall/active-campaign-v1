@@ -1,6 +1,6 @@
 {
   "name": "active-campaign-v1",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Wrapper for Active Campaign API v1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,8 +38,8 @@
     "ts-jest": "^25.2.0"
   },
   "dependencies": {
-    "@types/superagent": "^4.1.5",
     "@types/node": "^13.1.7",
+    "@types/superagent": "^4.1.5",
     "lodash": "^4.17.15",
     "superagent": "^5.2.1",
     "tsc": "^1.20150623.0",
