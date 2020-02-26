@@ -100,7 +100,7 @@ export interface ContactPayload {
   tags: string
   ip4: string
   form: string
-  status: string
+  'status[123]': string
   [propName: string]: string
 }
 

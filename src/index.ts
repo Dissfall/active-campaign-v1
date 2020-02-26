@@ -44,7 +44,7 @@ class AC {
       customer_acct_name: data?.customerName ?? '',
       tags: join(data?.tags, ', ') ?? '',
       ip4: data?.ip4 ?? '',
-      status: String(data?.status ?? ''),
+      'status[123]': String(data?.status ?? ''),
       form: String(data?.form ?? ''),
       ...mapKeys(data.fields, (val: string, key: string) => `field[%${key}%,0]`)
     }, (value: any) => value != '') as ContactPayload
