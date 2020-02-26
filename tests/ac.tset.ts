@@ -1,5 +1,7 @@
+import { Contact } from '../src/types'
 import { AC } from '../src/index'
-import { lorem } from 'faker'
+import { lorem, internet, name, phone, company } from 'faker'
+import { join } from 'lodash'
 
 let ac: AC
 
@@ -69,5 +71,36 @@ describe('Request preparing test', () => {
     expect(ac.request(action).format.serialize.url).toBe(
       `http://${AC_NAME}.api-us1.com/admin/api.php?api_action=${action}&api_output=serialize`
     )
+  })
+
+  it('Payload preparing', () => {
+    const payload = {
+      email: internet.email(),
+      firstName: name.firstName(),
+      lastName: name.lastName(),
+      phone: phone.phoneNumber(),
+      customerName: company.companyName(),
+      tags: [lorem.word(), lorem.word(), lorem.word()],
+      ip4: internet.ip(),
+      list: 1,
+      status: Math.floor(Math.random() * 3) + 1,
+      fields: {
+        TEST: 'TEST'
+      }
+    } as Contact
+    const requestData = {
+      email: payload.email,
+      first_name: payload.firstName,
+      last_name: payload.lastName,
+      phone: payload.phone,
+      customer_acct_name: payload.customerName,
+      tags: join(payload.tags, ', '),
+      ip4: payload.ip4,
+      'p[1]': '1',
+      'status[123]': payload.status?.toString(),
+      'field[%TEST%,0]': 'TEST'
+    }
+    //@ts-ignore
+    expect(ac.prepareContactPayload(payload)).toStrictEqual(requestData)
   })
 })
