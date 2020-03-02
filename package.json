@@ -1,6 +1,6 @@
 {
   "name": "active-campaign-v1",
-  "version": "1.0.10",
+  "version": "1.1.0",
   "description": "Wrapper for Active Campaign API v1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,8 @@
     "build": "node_modules/.bin/tsc",
     "lint": "./node_modules/.bin/eslint 'src/**/*.{ts}' --fix",
     "test": "jest --coverage",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "doc": "./node_modules/.bin/typedoc --mode file"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
@@ -35,7 +36,8 @@
     "jest": "^25.1.0",
     "lint-staged": "^10.0.2",
     "prettier": "^1.19.1",
-    "ts-jest": "^25.2.0"
+    "ts-jest": "^25.2.0",
+    "typedoc": "^0.16.11"
   },
   "dependencies": {
     "@types/node": "^13.1.7",
@@ -64,5 +66,17 @@
   },
   "repository": "git@github.com:Dissfall/active-campaign-v1.git",
   "author": "dissfall <dissfalling@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "active campaign",
+    "active hosted",
+    "API",
+    "API wrapper",
+    "active",
+    "campaign",
+    "email marketing",
+    "email",
+    "newsletter",
+    "contact"
+  ]
 }
