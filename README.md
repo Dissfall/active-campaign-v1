@@ -9,6 +9,18 @@ _Wrapper for Active Campaign API v1_
 
 This module contains API endpoints, which I needed when implementing my project. You can easily contribute to this module the endpoints you need and use them.
 
+## Installation
+```BASH
+yarn add active-campaign-v1
+```
+**or**
+```BASH
+npm install active-campaign-v1
+```
+
+## Docks
+**See the documentation at []()**
+
 ## Example
 
 ### Common JS
@@ -25,3 +37,27 @@ ac.contactAdd({
 ```
 
 This code creates new contact with email `test@mail.com` and `test` name.
+
+## Avaliable methods
+
+### Account view
+_full support_
+
+|   endpoint   |    method   |
+|     ----     |     ----    |
+| account_view | accountView |
+
+### Contact
+_partially support_
+
+|   endpoint   |    method   |
+|     ----     |     ----    |
+| contact_add  | contactAdd  |
+| contact_sync | contactSync |
+| contact_view | contactView |
+
+## License
+
+Licensed under the MIT License, Copyright © 2020-present George Lukyanov
+
+See LICENSE for more information.
