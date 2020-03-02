@@ -37,3 +37,21 @@ ac.contactAdd({
 ```
 
 This code creates new contact with email `test@mail.com` and `test` name.
+
+## Avaliable methods
+
+### Account view
+_full support_
+
+|   endpoint   |    method   |
+|     ----     |     ----    |
+| account_view | accountView |
+
+### Contact
+_partially support_
+
+|   endpoint   |    method   |
+|     ----     |     ----    |
+| contact_add  | contactAdd  |
+| contact_sync | contactSync |
+| contact_view | contactView |
