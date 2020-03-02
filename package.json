@@ -66,5 +66,17 @@
   },
   "repository": "git@github.com:Dissfall/active-campaign-v1.git",
   "author": "dissfall <dissfalling@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": [
+    "active campaign",
+    "active hosted",
+    "API",
+    "API wrapper",
+    "active",
+    "campaign",
+    "email marketing",
+    "email",
+    "newsletter",
+    "contact"
+  ]
 }
