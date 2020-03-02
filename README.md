@@ -55,3 +55,9 @@ _partially support_
 | contact_add  | contactAdd  |
 | contact_sync | contactSync |
 | contact_view | contactView |
+
+## License
+
+Licensed under the MIT License, Copyright © 2020-present George Lukyanov
+
+See LICENSE for more information.
