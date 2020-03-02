@@ -126,16 +126,46 @@ export interface Field {
 }
 
 export interface Contact {
+  /**
+   * Contact email
+   */
   email: string
+  /**
+   * Contact first name
+   */
   firstName?: string
+  /**
+   * Contact last name
+   */
   lastName?: string
+  /**
+   * Contact phone
+   */
   phone?: string
+  /**
+   * Contact company name
+   */
   customerName?: string
+  /**
+   * Array of contact tags
+   */
   tags?: string[]
+  /**
+   * Contact ip address
+   */
   ip4?: string
+  /**
+   * Target list to add contact to it
+   */
   list?: number | string
+  /**
+   * Current contact status {1 | 2 | 3}
+   */
   status?: number
   form?: number
+  /**
+   * Custom contact fields
+   */
   fields?: {
     [propName: string]: string
   }

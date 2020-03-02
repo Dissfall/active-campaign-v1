@@ -1,6 +1,12 @@
 import { get, post } from 'superagent'
 import { zip, join, map, pickBy, mapKeys } from 'lodash'
-import { AccountViewRes, ContactAddRes, ContactViewRes, Contact, ContactPayload } from './types'
+import {
+  AccountViewRes,
+  ContactAddRes,
+  ContactViewRes,
+  Contact,
+  ContactPayload,
+} from './types'
 
 /**
  * Active Campaign API v1 wrapper
@@ -11,43 +17,83 @@ class AC {
   private readonly host: string
   private readonly endpoint = '/admin/api.php'
 
+  /**
+   * @param accountName - Name of AC account
+   * @param token - AC API token
+   */
   constructor(accountName: string, private readonly token: string) {
     this.host = this.hostGen(accountName)
   }
 
+  /**
+   * Method to get AC account info
+   */
   async accountView(): Promise<AccountViewRes> {
     return this.request('account_view').auth.get
   }
 
+  /**
+   * Add new contact
+   *
+   * @param data - Contact data
+   */
   async contactAdd(data: Contact): Promise<ContactAddRes> {
-    return this.request(methods.contact.add).auth.payload(this.prepareContactPayload(data)).post
+    return this.request(methods.contact.add).auth.payload(
+      this.prepareContactPayload(data)
+    ).post
   }
 
+  /**
+   * Get contact info by id or email
+   *
+   * @param param - Contact email or id
+   */
   async contactView(param: number | string): Promise<ContactViewRes> {
     if (typeof param === 'string' && param.indexOf('@') > -1) {
-      return this.request(methods.contact.viewEmail).auth.set({email: param}).get
+      return this.request(methods.contact.viewEmail).auth.set({ email: param })
+        .get
     } else {
-      return this.request(methods.contact.view).auth.set({id: param.toString()}).get
+      return this.request(methods.contact.view).auth.set({
+        id: param.toString(),
+      }).get
     }
   }
 
+  /**
+   * Sync (create or update) contact
+   *
+   * @param data - Contact data
+   */
   async contactSync(data: Contact): Promise<ContactAddRes> {
-    return this.request(methods.contact.sync).auth.payload(this.prepareContactPayload(data)).post
+    return this.request(methods.contact.sync).auth.payload(
+      this.prepareContactPayload(data)
+    ).post
   }
 
+  /**
+   * Convert contact payload to AC format
+   *
+   * @param data - Contact data
+   */
   private prepareContactPayload(data: Contact): ContactPayload {
-    const contact: ContactPayload = pickBy<ContactPayload>({
-      email: data.email,
-      first_name: data?.firstName ?? '',
-      last_name: data?.lastName ?? '',
-      phone: data?.phone ?? '',
-      customer_acct_name: data?.customerName ?? '',
-      tags: join(data?.tags, ', ') ?? '',
-      ip4: data?.ip4 ?? '',
-      'status[123]': String(data?.status ?? ''),
-      form: String(data?.form ?? ''),
-      ...mapKeys(data.fields, (val: string, key: string) => `field[%${key}%,0]`)
-    }, (value: any) => value != '') as ContactPayload
+    const contact: ContactPayload = pickBy<ContactPayload>(
+      {
+        email: data.email,
+        first_name: data?.firstName ?? '',
+        last_name: data?.lastName ?? '',
+        phone: data?.phone ?? '',
+        customer_acct_name: data?.customerName ?? '',
+        tags: join(data?.tags, ', ') ?? '',
+        ip4: data?.ip4 ?? '',
+        'status[123]': String(data?.status ?? ''),
+        form: String(data?.form ?? ''),
+        ...mapKeys(
+          data.fields,
+          (val: string, key: string) => `field[%${key}%,0]`
+        ),
+      },
+      (value: any) => value != ''
+    ) as ContactPayload
 
     if (data.list) contact[`p[${data.list}]`] = String(data.list)
 
@@ -59,9 +105,9 @@ class AC {
    *
    * @link https://www.activecampaign.com/api/overview.php
    *
-   * @param {string} action Name of API endpoint.
+   * @param action - Name of API endpoint.
    *
-   * @return {object} Object contains methods for preparing and making request.
+   * @returns Object contains methods for preparing and making request.
    */
   private readonly request = (action: string): any => {
     const url = this.host + this.endpoint
@@ -74,7 +120,7 @@ class AC {
       /**
        * This method allows to set URL params.
        *
-       * @param {Params} params Object contains key-value pairs of params.
+       * @param params - Object contains key-value pairs of params.
        * @see Params
        */
       set(params: Params) {
@@ -92,8 +138,8 @@ class AC {
       /**
        * This method updates param if new value provided and reset param if not
        *
-       * @param {string} param Param name
-       * @param {string} newValue Value
+       * @param param - Param name
+       * @param newValue - Value
        */
       reset(param: string, newValue?: string) {
         if (newValue) {
@@ -109,8 +155,7 @@ class AC {
       /**
        * Method for check if param setted
        *
-       * @param {string} param Param name
-       * @return {boolean}
+       * @param param - Param name
        */
       isSetted(param: string) {
         return new RegExp(param).test(this.url)
@@ -128,7 +173,7 @@ class AC {
       /**
        * Method to set paylod for POST request
        *
-       * @param {any} data Payload object
+       * @param data - Payload object
        */
       payload(data: any) {
         this.data = data
@@ -137,7 +182,7 @@ class AC {
       /**
        * Method to set api_action variable in URL
        *
-       * @param {string} action Action name
+       * @param action - Action name
        * @link https://www.activecampaign.com/api/overview.php
        */
       action(action: string) {
@@ -161,7 +206,9 @@ class AC {
        * Method to performe POST request with generated URL and data
        */
       get post() {
-        return post(this.url).type('form').send(this.data)
+        return post(this.url)
+          .type('form')
+          .send(this.data)
       },
       /**
        * Method to set response format
@@ -205,7 +252,7 @@ class AC {
 
 const methods = {
   account: {
-    view: 'account_view'
+    view: 'account_view',
   },
   contact: {
     add: 'contact_add',
@@ -214,8 +261,8 @@ const methods = {
     list: 'contact_list',
     sync: 'contact_sync',
     view: 'contact_view',
-    viewEmail: 'contact_view_email'
-  }
+    viewEmail: 'contact_view_email',
+  },
 }
 
 export interface Params {
